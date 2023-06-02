@@ -8,9 +8,9 @@ import ru.pokhodai.projects.model.response.marvel.CharacterResponse
 interface MarvelService {
 
     @GET("v1/public/characters")
-    suspend fun getCharacters(
-        @Query("limit") limit: Int = 10,
-        @Query("offset") offset: Int = 0,
+    suspend fun characters(
+        @Query("limit") limit: Int = 0,
+        @Query("offset") offset: Int = 10,
         @Query("nameStartsWith") nameStartsWith: String? = null,
     ): Response<CharacterResponse>
 }
