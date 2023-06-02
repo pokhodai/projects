@@ -1,40 +1,47 @@
 package ru.pokhodai.projects.core.base
 
+import android.util.Log
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.cancel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import ru.pokhodai.projects.utils.ApiResult
 import java.net.ConnectException
 import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+import kotlin.coroutines.coroutineContext
 
 abstract class BaseRepository {
 
-    inline fun <T> toResultFlow(crossinline response: suspend () -> Response<T>?): Flow<ApiResult<T>> {
+    protected inline fun <T> toResultFlow(crossinline response: suspend () -> Response<T>?): Flow<ApiResult<T>> {
         return flow {
             emit(ApiResult.Loading)
-            response()?.let { call ->
+            runCatching {
+                response()
+            }.getOrNull()?.let { call ->
                 try {
                     if (call.isSuccessful) {
                         val body = call.body()
                         if (body != null) {
-                            emit(ApiResult.Success(body))
-                            return@flow
+                            return@flow emit(ApiResult.Success(body))
                         }
                         emit(ApiResult.Error(errorHandle(call)))
                     } else {
                         emit(ApiResult.Error(errorHandle(call)))
                     }
                 } catch (e: Exception) {
-                    emit(ApiResult.Error(errorHandle(e)))
+                    return@flow emit(ApiResult.Error(errorHandle(e)))
                 }
             }
         }.flowOn(Dispatchers.IO)
     }
 
-    fun <T> errorHandle(call: Response<T>): String {
+    protected fun <T> errorHandle(call: Response<T>): String {
         return if (call.isSuccessful) {
             call.message()
         } else {
@@ -46,17 +53,19 @@ abstract class BaseRepository {
         }
     }
 
-    fun errorHandle(e: Exception): String {
+    protected fun errorHandle(e: Exception): String {
         return when (e) {
             is SocketTimeoutException, is ConnectException -> RequestError.CONNECT.message
             is CancellationException -> RequestError.COROUTINE_CANCEL.message
+            is UnknownHostException -> RequestError.UNKNOWN_HOST.message
             else -> RequestError.NONE.message
         }
     }
 
-    enum class RequestError(val message: String) {
+    protected enum class RequestError(val message: String) {
         CONNECT("error connect"),
         COROUTINE_CANCEL("coroutine cancel"),
+        UNKNOWN_HOST("unknown"),
         NONE("error")
     }
 

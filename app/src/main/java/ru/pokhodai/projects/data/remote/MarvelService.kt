@@ -9,8 +9,8 @@ interface MarvelService {
 
     @GET("v1/public/characters")
     suspend fun characters(
-        @Query("limit") limit: Int = 0,
-        @Query("offset") offset: Int = 10,
+        @Query("limit") limit: Int = 10,
+        @Query("offset") offset: Int = 0,
         @Query("nameStartsWith") nameStartsWith: String? = null,
     ): Response<CharacterResponse>
 }
