@@ -37,18 +37,4 @@ object HttpClientModule {
         writeTimeout(120L, TimeUnit.SECONDS)
         readTimeout(120L, TimeUnit.SECONDS)
     }.build()
-
-//    @Provides
-//    @Singleton
-//    fun provideCache(
-//        app: App
-//    ): Cache? {
-//        var cache: Cache? = null
-//        try {
-//            cache = Cache(File(app.cacheDir, "http-cache"), (10 * 1024 * 1024).toLong())
-//        } catch (e: Exception) {
-//            Log.d("Test", "Could not create Cache!")
-//        }
-//        return cache
-//    }
 }

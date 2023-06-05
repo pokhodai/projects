@@ -24,10 +24,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideKotlinConvertFactory(
-        json: Json
-    ): Converter.Factory =
-        json.asConverterFactory("application/json".toMediaType())
+    fun provideKotlinConvertFactory(json: Json): Converter.Factory = json.asConverterFactory("application/json".toMediaType())
 
     @Provides
     @Singleton

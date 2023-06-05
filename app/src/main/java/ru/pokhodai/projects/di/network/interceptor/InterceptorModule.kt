@@ -24,11 +24,12 @@ object InterceptorModule {
     fun provideMarvelInterceptor(): Interceptor = Interceptor { chain ->
         val ts = Timestamp(System.currentTimeMillis())
         val hash = "${ts.time}${Constant.PRIVATE_API_KEY}${Constant.PUBLIC_API_KEY}"
-        val hashInMD5 = BigInteger(1, MessageDigest
-            .getInstance("MD5")
-            .digest(hash.toByteArray()))
-            .toString(16)
-            .padStart(32, '0')
+        val hashInMD5 = BigInteger(
+            1,
+            MessageDigest
+                .getInstance("MD5")
+                .digest(hash.toByteArray())
+        ).toString(16).padStart(32, '0')
 
         val httpUrl = chain
             .request()

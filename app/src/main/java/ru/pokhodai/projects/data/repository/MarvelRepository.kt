@@ -16,4 +16,7 @@ class MarvelRepository @Inject constructor(
         marvelService.characters()
     }
 
+    fun getCharacterById(id: Int) = toResultFlow {
+        marvelService.characterById(id)
+    }
 }

@@ -21,7 +21,7 @@ class CharacterResponse(
           @SerialName("name") val name: String? = null,
           @SerialName("description") val description: String? = null,
           @SerialName("modified") val modified: String? = null,
-          @SerialName("thumbnail") val thumbnail: Thumbnail
+          @SerialName("thumbnail") val thumbnail: Thumbnail? = null
         ) {
             @Serializable
             class Thumbnail(
