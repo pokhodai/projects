@@ -15,4 +15,5 @@ class MarvelRepository @Inject constructor(
     fun getCharacters() = toResultFlow {
         marvelService.characters()
     }
+
 }

@@ -1,4 +1,4 @@
-package ru.pokhodai.projects.domain
+package ru.pokhodai.projects.domain.character_use_case
 
 import kotlinx.coroutines.flow.Flow
 import ru.pokhodai.projects.core.base.BaseUseCase
@@ -11,9 +11,9 @@ class CharactersUseCase @Inject constructor(
     private val marvelRepository: MarvelRepository
 ): BaseUseCase() {
 
-    override suspend fun invoke(): Flow<UIState<CharacterResponse>> {
+    override suspend fun invoke(): Flow<UIState<CharacterResponse.Data>> {
         return run(flow = marvelRepository.getCharacters()) {
-            it
+            it.data
         }
     }
 }
