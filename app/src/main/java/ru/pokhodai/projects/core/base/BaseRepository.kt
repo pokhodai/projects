@@ -39,7 +39,7 @@ abstract class BaseRepository {
                         emit(ApiResult.Error(errorHandle.errorHandle(this)))
                     }
                 } catch (e: Exception) {
-                   emit(ApiResult.Error(errorHandle.errorHandle(e)))
+                   return@flow emit(ApiResult.Error(errorHandle.errorHandle(e)))
                 }
             } ?: return@flow emit(ApiResult.Error(errorHandle.errorHandle()))
         }.flowOn(Dispatchers.IO)

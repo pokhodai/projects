@@ -12,13 +12,7 @@ class MarvelRepository @Inject constructor(
     private val marvelService: MarvelService,
 ): BaseRepository() {
 
-    fun getCharacters(
-        limit: Int = 10,
-        offset: Int = 0
-    ) = toResultFlow {
-        marvelService.characters(
-            limit = limit,
-            offset = offset
-        )
+    fun getCharacters() = toResultFlow {
+        marvelService.characters()
     }
 }

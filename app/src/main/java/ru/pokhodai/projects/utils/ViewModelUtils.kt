@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-fun ViewModel.launch(
+fun ViewModel.launchDefault(
     dispatcher: CoroutineDispatcher = Dispatchers.IO,
     block: suspend CoroutineScope.() -> Unit
 ): Job = viewModelScope.launch(context = dispatcher, block = block)
