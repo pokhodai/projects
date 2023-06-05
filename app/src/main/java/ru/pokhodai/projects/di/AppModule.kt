@@ -11,7 +11,6 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Converter
 import ru.pokhodai.projects.App
-import ru.pokhodai.projects.core.base.ErrorHandle
 import javax.inject.Singleton
 
 @Module

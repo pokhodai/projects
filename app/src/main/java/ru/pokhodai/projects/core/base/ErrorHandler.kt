@@ -3,10 +3,7 @@ package ru.pokhodai.projects.core.base
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
-import androidx.core.content.ContextCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.serialization.json.Json
 import org.json.JSONObject
 import retrofit2.Response
 import java.net.ConnectException
@@ -16,7 +13,7 @@ import java.util.concurrent.CancellationException
 import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
-class ErrorHandle @Inject constructor(
+class ErrorHandler @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     fun <T> errorHandle(call: Response<T>): String {
