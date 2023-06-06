@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class CharacterResponse(
+class ComicsResponse(
     @SerialName("data") override val data: Data
 ): MarvelResponse() {
     @Serializable
@@ -19,7 +19,7 @@ class CharacterResponse(
         @Serializable
         class Result(
             @SerialName("id") override val id: Int = -1,
-            @SerialName("name") override val title: String? = null,
+            @SerialName("title") override val title: String? = null,
             @SerialName("description") override val description: String? = null,
             @SerialName("modified") override val modified: String? = null,
             @SerialName("thumbnail") override val thumbnail: Thumbnail? = null

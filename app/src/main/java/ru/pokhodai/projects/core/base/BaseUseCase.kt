@@ -12,10 +12,7 @@ abstract class BaseUseCase {
     protected suspend inline fun <T, R> run(
         apiResultFlow: Flow<ApiResult<T>>,
         crossinline mappedError: (Int, String) -> Pair<Int, String> = { code, message ->
-            Pair(
-                code,
-                message
-            )
+            Pair(code, message)
         },
         crossinline mappedData: suspend (T) -> R,
     ): Flow<ApiResult<R>> = apiResultFlow.flatMapMerge { result ->

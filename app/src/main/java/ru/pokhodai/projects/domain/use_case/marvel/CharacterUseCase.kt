@@ -8,7 +8,15 @@ class CharacterUseCase @Inject constructor(
     private val marvelRepository: MarvelRepository
 ) : BaseUseCase() {
 
-    suspend operator fun invoke() = run(marvelRepository.getCharacters()) {
+    suspend operator fun invoke(
+        limit: Int,
+        offset: Int
+    ) = run(
+        marvelRepository.getCharacters(
+            limit = limit,
+            offset = offset
+        )
+    ) {
         it.data.results
     }
 
