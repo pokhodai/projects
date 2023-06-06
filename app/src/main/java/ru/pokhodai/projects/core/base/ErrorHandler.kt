@@ -16,16 +16,19 @@ import javax.inject.Inject
 class ErrorHandler @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    fun <T> errorHandle(call: Response<T>): String {
-        return if (call.isSuccessful) {
-            call.message()
-        } else {
-            runCatching {
-               JSONObject(
-                    call.errorBody()?.string().toString()
-                )[ERROR_MESSAGE_KEY].toString()
-            }.getOrNull() ?: call.message()
-        }
+    fun <T> errorHandle(call: Response<T>): Pair<Int, String> {
+        return Pair(
+            call.code(), if (call.isSuccessful) {
+                call.message()
+            } else {
+                runCatching {
+                    JSONObject(
+                        call.errorBody()?.string().toString()
+                    )[ERROR_MESSAGE_KEY].toString()
+
+                }.getOrNull() ?: call.message()
+            }
+        )
     }
 
     fun errorHandle(e: Exception): String {
@@ -34,7 +37,7 @@ class ErrorHandler @Inject constructor(
             is CancellationException -> RequestError.COROUTINE_CANCEL.message
             is UnknownHostException -> RequestError.UNKNOWN_HOST.message
             is TimeoutException -> RequestError.TIMEOUT.message
-            else -> errorHandle()
+            else -> errorHandle(e)
         }
     }
 

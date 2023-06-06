@@ -11,14 +11,25 @@ abstract class BaseUseCase {
 
     protected suspend inline fun <T, R> run(
         apiResultFlow: Flow<ApiResult<T>>,
-        crossinline onError: (String) -> String = { message -> message },
-        crossinline onSuccess: suspend (T) -> R,
+        crossinline mappedError: (Int, String) -> Pair<Int, String> = { code, message ->
+            Pair(
+                code,
+                message
+            )
+        },
+        crossinline mappedData: suspend (T) -> R,
     ): Flow<ApiResult<R>> = apiResultFlow.flatMapMerge { result ->
         flow {
             when (result) {
-                is ApiResult.Loading -> emit(result)
-                is ApiResult.Success -> emit(ApiResult.Success(onSuccess.invoke(result.data)))
-                is ApiResult.Error -> emit(ApiResult.Error(onError.invoke(result.exception)))
+                is ApiResult.Success -> emit(ApiResult.Success(mappedData(result.data)))
+                is ApiResult.Error -> emit(
+                    ApiResult.Error(
+                        mappedError(
+                            result.error.first,
+                            result.error.second
+                        )
+                    )
+                )
             }
         }
     }

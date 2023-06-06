@@ -79,4 +79,11 @@ dependencies {
     //Okhttp client
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.4'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.4'
+
+    //Pagination
+    implementation 'androidx.paging:paging-runtime:3.1.1'
+    implementation 'androidx.paging:paging-common:3.1.1'
+
+    //Swipe
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

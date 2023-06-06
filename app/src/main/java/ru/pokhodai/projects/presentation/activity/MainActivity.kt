@@ -10,8 +10,6 @@ import ru.pokhodai.projects.databinding.ActivityMainBinding
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<MainViewModel>()
-
     private var _binding: ActivityMainBinding? = null
     private val binding
         get() = _binding!!

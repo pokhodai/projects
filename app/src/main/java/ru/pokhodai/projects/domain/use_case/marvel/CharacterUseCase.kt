@@ -9,7 +9,7 @@ class CharacterUseCase @Inject constructor(
 ) : BaseUseCase() {
 
     suspend operator fun invoke() = run(marvelRepository.getCharacters()) {
-        it.data
+        it.data.results
     }
 
     suspend operator fun invoke(id: Int) = run(marvelRepository.getCharacterById(id)) {
